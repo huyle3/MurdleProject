@@ -10,13 +10,13 @@ public class Puzzle {
 
     public Puzzle(String[][] choiceArr, String[] answerArr) {
         arrLength = choiceArr.length; //length of array
-        String[][] arrOfArr = {
-            whatArr, whoArr, whereArr, whyArr};
-        for (int i = 0; i < arrOfArr.length; i++) { // loops through each array and set them to arrLength size
-            arrOfArr[i] = new String[arrLength];
-        }
-
-        for (int i =0; i < arrLength; i++) {
+        whatArr = new String[arrLength];
+        whoArr = new String[arrLength];
+        whereArr = new String[arrLength];
+        whyArr = new String[arrLength];
+        answerArr = new String[arrLength];
+        
+        for (int i = 0; i < arrLength; i++) {
             for (int j = 0; j < choiceArr[0].length; j++) { //restructure later
                 if (j == 0) { // first one qui
                     whoArr[i] = choiceArr[i][j];

@@ -6,39 +6,53 @@ public class Game {
 
     public Game(){
         puzzleArr = new Puzzle[100];
-        File fileA = new File("answerChoices.csv");
-        Scanner inputA = new Scanner(fileA);
-        File fileB = new File("trueAnswers.csv");
-        Scanner inputB = new Scanner(fileB);
    
-        //(choiceArr) reads file -> splits CSV into arr -> makes 2Darr of csv, passed
+        //(choiceArr) reads file -> splits TSV into arr -> makes 2Darr of tsv, passed
         //(answerArr) above excluding the 2Darr step 
-        for (int i = 0; i < 100; i++){
-            String temp;
-            String[][] choiceArr; //stores (ordered) question choices, passed to Puzzle objects
-            String[] answerArr; //above but w/ question answers
-            if (i < 50){
-                choiceArr = new String[3][];
-                answerArr = new String[3];
-                for (int j = 0; j < 3; j++){
-                    temp = inputA.next();
-                    choiceArr[j] = temp.split(",");
+        try{ 
+            File fileA = new File("answerChoices.tsv");
+            Scanner inputA = new Scanner(fileA);
+            File fileB = new File("trueAnswers.tsv");
+            Scanner inputB = new Scanner(fileB);
+            for (int i = 0; i < 100; i++){
+                String temp;
+                String[][] choiceArr; //stores (ordered) question choices, passed to Puzzle objects
+                String[] answerArr; //above but w/ question answers
+                if (i < 50){
+                    choiceArr = new String[3][3];
+                }else{
+                    choiceArr = new String[4][4];
                 }
-            }else{
-                choiceArr = new String[4][];
-                for (int j = 0; j < 4; j++){
-                    temp = inputA.next();
-                    choiceArr[j] = temp.split(",");
-                }
+
+                for (int j = 0; j < choiceArr.length; j++){
+                    temp = inputA.nextLine();
+                    choiceArr[j] = temp.split("\t");
+                 }
+                temp = inputB.nextLine();
+                answerArr = temp.split("\t");
+                puzzleArr[i] = new Puzzle(choiceArr, answerArr);
             }
-            temp = inputB.next();
-            answerArr = temp.split(",");
-            puzzleArr[i] = new Puzzle(choiceArr, answerArr);
-        }
+        }catch (FileNotFoundException e){
+			e.printStackTrace();
+		}
     }    
 
     //This method requires input from the user interface
     public int getPuzzleNum(){
         return 0;
+    }
+
+    public void printArr(String[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println("answerArr: " + arr[i]);
+        }
+    }
+    
+    public void printArr(String[][] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                System.out.println("choiceArr: " + arr[i][j]);
+            }
+        }
     }
 }
