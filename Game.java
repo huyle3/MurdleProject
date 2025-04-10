@@ -3,7 +3,7 @@ import java.io.*;
 public class Game {
     private Puzzle[] puzzleArr; //stores every puzzle in numerical (top to bottom) order
     //private int puzzleNum; probably not really needed
-
+    
     public Game(){
         puzzleArr = new Puzzle[100];
    
@@ -38,16 +38,19 @@ public class Game {
     }    
 
     //This method requires input from the user interface
-    public int getPuzzleNum(){
-        return 0;
+    //Checks user input -> returns boolean[] w/ each index representing correctness of user answer for each field
+    public boolean[] checkPuzzle(int puzzleNum, String[] userAnswers){
+        return puzzleArr[puzzleNum-1].checkArr(userAnswers);
     }
 
+    //testing method
     public void printArr(String[] arr) {
         for (int i = 0; i < arr.length; i++) {
             System.out.println("answerArr: " + arr[i]);
         }
     }
-    
+
+    //testing method
     public void printArr(String[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {

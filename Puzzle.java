@@ -14,6 +14,7 @@ public class Puzzle {
         whoArr = new String[arrLength];
         whereArr = new String[arrLength];
         whyArr = new String[arrLength];
+        this.answerArr = answerArr;
         answerArr = new String[arrLength];
         
         for (int i = 0; i < arrLength; i++) {
@@ -30,27 +31,17 @@ public class Puzzle {
             }
         }
     }
-    public boolean checkArr(String category) { //checks that array given the category as input
-        if (category.equals("Who")) {
-            return check(whoArr, 1);
-        } else if (category.equals("What")) {
-            return check(whatArr, 2);
-        } else if (category.equals("Where")) {
-            return check(whereArr, 3);
-        } else if (category.equals("Why")) {
-            return check(whyArr, 4);
-        }
-        return false;
-    }
- 
-
-    private boolean check(String[] catArr, int num) {
-        for (int i = 0; i < catArr.length; i++) {
-            if (catArr[i].equals(answerArr[num])) { //loops through each value in category arr
-                return true; //checks if equal to the correct answer
+    
+    public boolean[] checkArr(String[] userInput) { //checks that array given the category as input
+        boolean[] boolArr = new boolean[arrLength]; //either 3 or 4 long
+        for (int i = 0; i < answerArr.length; i++) { // loops through each correct answer
+            if (answerArr[i].equals(userInput[i])) { // if that correct answer is equal to what user input
+                boolArr[i] = true; // return true
+            } else {
+                boolArr[i] = false; //return false
             }
         }
-        return false;
+        return boolArr;
     }
 
     //getter
