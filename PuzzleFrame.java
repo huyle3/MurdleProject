@@ -18,6 +18,15 @@ public class PuzzleFrame {
     JPanel button3 = new JPanel();
     JPanel button4 = new JPanel();
 
+    DrawingPanel panel1 = new DrawingPanel(50, 50);
+    DrawingPanel panel2 = new DrawingPanel(50, 50);
+    DrawingPanel panel3 = new DrawingPanel(50, 50);
+    DrawingPanel panel4 = new DrawingPanel(50, 50);
+
+    Graphics g1 = panel1.getGraphics();
+    Graphics g2 = panel2.getGraphics();
+    Graphics g3 = panel3.getGraphics();
+    Graphics g4 = panel4.getGraphics();
 
 
     public PuzzleFrame(){
@@ -60,21 +69,33 @@ public class PuzzleFrame {
         button1.add(quiButton);
         button1.add(Box.createHorizontalGlue());
         //rectangle here
+        button1.add(panel1);
+        g1.setColor(Color.RED);
+        g1.fillRect(0, 0, 50, 50);
 
         button2.setLayout(new BoxLayout(button2, BoxLayout.X_AXIS));
         button2.add(quoiButton);
         button2.add(Box.createHorizontalGlue());
         //rectangle here
+        button2.add(panel2);
+        g2.setColor(Color.RED);
+        g2.fillRect(0, 0, 50, 50);
 
         button3.setLayout(new BoxLayout(button3, BoxLayout.X_AXIS));
         button3.add(ouButton);
         button3.add(Box.createHorizontalGlue());
         //rectangle here
+        button3.add(panel3);
+        g3.setColor(Color.RED);
+        g3.fillRect(0, 0, 50, 50);
 
         button4.setLayout(new BoxLayout(button4, BoxLayout.X_AXIS));
         button4.add(pourquoiButton);
         button4.add(Box.createHorizontalGlue());
         //rectangle here
+        button4.add(panel4);
+        g4.setColor(Color.RED);
+        g4.fillRect(0, 0, 50, 50);
 
 
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
