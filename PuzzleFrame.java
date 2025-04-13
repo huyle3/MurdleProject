@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.BoxLayout;
 import java.awt.*;
 import java.awt.event.*;
+import packageName.DrawingPanel;
 //main is here! waow
 
 public class PuzzleFrame {
