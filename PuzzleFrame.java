@@ -94,18 +94,18 @@ public class PuzzleFrame {
 
 
     public static void main(String[] args) {
-        //PuzzleFrame puzzleFrame = new PuzzleFrame();
-        String[] userAnswers = {
-            "le maire Honey",
-        "une araignée venimeuse",
-        "les anciennes ruines",
-        "pour une arnaque immobilière"
-    };
-        Game game = new Game();
-        boolean[] arr = game.checkPuzzle(55, userAnswers);
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
-        }
+        PuzzleFrame puzzleFrame = new PuzzleFrame();
+    //     String[] userAnswers = {
+    //         "le maire Honey",
+    //     "une araignée venimeuse",
+    //     "les anciennes ruines",
+    //     "pour une arnaque immobilière"
+    // };
+    //     Game game = new Game();
+    //     boolean[] arr = game.checkPuzzle(55, userAnswers);
+    //     for (int i = 0; i < arr.length; i++) {
+    //         System.out.println(arr[i]);
+    //     }
     }
 }
 

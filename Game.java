@@ -3,10 +3,8 @@ import java.io.*;
 public class Game {
     private Puzzle[] puzzleArr; //stores every puzzle in numerical (top to bottom) order
     //private int puzzleNum; probably not really needed
-    
     public Game(){
         puzzleArr = new Puzzle[100];
-   
         //(choiceArr) reads file -> splits TSV into arr -> makes 2Darr of tsv, passed
         //(answerArr) above excluding the 2Darr step 
         try{ 
@@ -58,4 +56,8 @@ public class Game {
             }
         }
     }
+    public Puzzle givePuzzle(int puzzleNum) {
+        return puzzleArr[puzzleNum-1];
+    }
+
 }
