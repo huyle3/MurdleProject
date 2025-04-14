@@ -114,6 +114,19 @@ public class PuzzleFrame {
     //Contains DrawingPanel class 
     //Above components (within JPanels) created + action listeners for buttons/dropdowns
 
+    public class DrawingPanel extends JPanel {
+        private int width;
+        private int height;
+        public DrawingPanel(int width, int height) {
+            this.width = width;
+            this.height = height;
+            setPreferredSize(new Dimension(width,height));
+        }
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+        }
+    }
 
     public static void main(String[] args) {
         PuzzleFrame puzzleFrame = new PuzzleFrame();
