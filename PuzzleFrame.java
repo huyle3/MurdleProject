@@ -151,7 +151,6 @@ public class PuzzleFrame {
     //Contains DrawingPanel class 
     //Above components (within JPanels) created + action listeners for buttons/dropdowns
 
-
     public static void main(String[] args) {
         PuzzleFrame puzzleFrame = new PuzzleFrame();
     //     String[] userAnswers = {
