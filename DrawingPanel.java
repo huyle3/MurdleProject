@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DrawingPanel extends JPanel {
-    private Color color = Color.RED;
+    private Color color = Color.GRAY;
 
     public DrawingPanel(int width, int height) {
         setPreferredSize(new Dimension(width, height));
@@ -19,6 +19,6 @@ public class DrawingPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(color);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.fillRect(25, 25, 25, 25);
     }
 }
