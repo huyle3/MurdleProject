@@ -1,3 +1,8 @@
+package packageName;
+
+import javax.swing.*;
+import java.awt.*;
+
 public class DrawingPanel extends JPanel {
     private Color color = Color.RED;
 
