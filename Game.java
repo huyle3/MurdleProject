@@ -56,7 +56,7 @@ public class Game {
             }
         }
     }
-    public Puzzle givePuzzle(int puzzleNum) {
+    public Puzzle getPuzzle(int puzzleNum) {
         return puzzleArr[puzzleNum-1];
     }
 

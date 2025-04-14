@@ -3,23 +3,31 @@ import javax.swing.BoxLayout;
 import java.awt.*;
 import java.awt.event.*;
 //main is here! waow
+//here be dragons
 
 
 public class PuzzleFrame {
     private JPanel bigBody;
     private JPanel buttons;
+    private Game game;
+    private int currentPuzzle;
+//creates stuffs
+
+//dropdown stuff
+    String[] options1;
+    String[] options2; 
+    String[] options3;  
+    String[] options4; 
+    String[] nums;
 
 
-    String[] options1 = {"Option A qui", "Option B qui", "Option C qui", "Option D qui"};
-    String[] options2 = {"Option A quoi", "Option B quoi", "Option C quoi", "Option D quoi"};
-    String[] options3 = {"Option A ou", "Option B ou", "Option C ou", "Option D ou"};
-    String[] options4 = {"Option A pourquoi", "Option B pourquoi", "Option C pourquoi", "Option D pourquoi"};
-
-    JComboBox<String> quiButton = new JComboBox<>(options1);
-    JComboBox<String> quoiButton = new JComboBox<>(options2);
-    JComboBox<String> ouButton = new JComboBox<>(options3);
-    JComboBox<String> pourquoiButton = new JComboBox<>(options4);
+    JComboBox<String> quiButton;
+    JComboBox<String> quoiButton; 
+    JComboBox<String> ouButton; 
+    JComboBox<String> pourquoiButton; 
     JButton soumetrreButton = new JButton("Soumettre");
+
+    JComboBox<Integer> numButton;
 
     JPanel button1 = new JPanel();
     JPanel button2 = new JPanel();
@@ -38,6 +46,23 @@ public class PuzzleFrame {
 
 
     public PuzzleFrame(){
+
+        game = new Game();
+        currentPuzzle = 1;
+        options1 = game.getPuzzle(currentPuzzle).getWho();
+        options2 = game.getPuzzle(currentPuzzle).getWhat();
+        options3 = game.getPuzzle(currentPuzzle).getWhere();
+        options4 = game.getPuzzle(currentPuzzle).getWhy();
+        Integer[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89 ,90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100};
+
+
+        quiButton = new JComboBox<>(options1);
+        quoiButton = new JComboBox<>(options2);
+        ouButton = new JComboBox<>(options3);
+        pourquoiButton = new JComboBox<>(options4);
+
+        numButton = new JComboBox<>(nums);
+        
         JFrame frame = new JFrame("Murdle Français");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750, 500);
@@ -47,6 +72,8 @@ public class PuzzleFrame {
         BoxLayout bl = new BoxLayout(buttons, BoxLayout.Y_AXIS);
         buttons.setLayout(bl);
         BoxLayout bl2 = new BoxLayout(buttons, BoxLayout.X_AXIS);
+
+        //created the panels & whatnot
 
         button1.setLayout(bl2);
         button2.setLayout(bl2);
@@ -66,12 +93,13 @@ public class PuzzleFrame {
 
 
     public void addButtonFrame(JPanel buttons){  
+        //created button panel, w/ the drop down menues
         button1.setLayout(new BoxLayout(button1, BoxLayout.X_AXIS));
         button1.add(quiButton);
         button1.add(Box.createHorizontalGlue());
         //rectangle here
         button1.add(panel1);
-        panel1.setColor(Color.RED);
+        panel1.setColor(Color.GRAY);
         
 
         button2.setLayout(new BoxLayout(button2, BoxLayout.X_AXIS));
@@ -79,7 +107,7 @@ public class PuzzleFrame {
         button2.add(Box.createHorizontalGlue());
         //rectangle here
         button2.add(panel2);
-        panel2.setColor(Color.RED);
+        panel2.setColor(Color.GRAY);
         
 
         button3.setLayout(new BoxLayout(button3, BoxLayout.X_AXIS));
@@ -87,7 +115,7 @@ public class PuzzleFrame {
         button3.add(Box.createHorizontalGlue());
         //rectangle here
         button3.add(panel3);
-        panel3.setColor(Color.RED);
+        panel3.setColor(Color.GRAY);
         
 
         button4.setLayout(new BoxLayout(button4, BoxLayout.X_AXIS));
@@ -95,18 +123,21 @@ public class PuzzleFrame {
         button4.add(Box.createHorizontalGlue());
         //rectangle here
         button4.add(panel4);
-        panel4.setColor(Color.RED);
+        panel4.setColor(Color.GRAY);
         
 
 
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
+        buttons.add(numButton, Component.LEFT_ALIGNMENT);
 
         buttons.add(button1, Component.LEFT_ALIGNMENT);
         buttons.add(button2, Component.LEFT_ALIGNMENT);
         buttons.add(button3, Component.LEFT_ALIGNMENT);
         buttons.add(button4, Component.LEFT_ALIGNMENT);
         buttons.add(soumetrreButton, Component.LEFT_ALIGNMENT);
+
+        //add check box
 
         ActionListener submitListener = new ActionListener() {
             @Override
@@ -120,31 +151,24 @@ public class PuzzleFrame {
 
     private void checkAnswers() {
         // define correct answers
-        String[] correctAnswers = {"Option B qui", "Option C quoi", "Option A ou", "Option D pourquoi"};
+        DrawingPanel[] panelsList = {panel1, panel2, panel3, panel4};
 
-        if (quiButton.getSelectedItem().equals(correctAnswers[0])) {
-            panel1.setColor(Color.GREEN);
-        } else {
-            panel1.setColor(Color.RED);
+        String[] userAnswer = {
+            quiButton.getSelectedItem().toString(),
+            quoiButton.getSelectedItem().toString(),
+            ouButton.getSelectedItem().toString(),
+            pourquoiButton.getSelectedItem().toString()
+        };
+        boolean[] checkedAnswerArr = game.checkPuzzle(currentPuzzle, userAnswer);
+        
+        for (int i = 0; i < checkedAnswerArr.length; i++) {
+            if (checkedAnswerArr[i]) {
+                panelsList[i].setColor(Color.GREEN);
+            } else {
+                panelsList[i].setColor(Color.RED);
+            }
         }
-
-        if (quoiButton.getSelectedItem().equals(correctAnswers[1])) {
-            panel2.setColor(Color.GREEN);
-        } else {
-            panel2.setColor(Color.RED);
-        }
-
-        if (ouButton.getSelectedItem().equals(correctAnswers[2])) {
-            panel3.setColor(Color.GREEN);
-        } else {
-            panel3.setColor(Color.RED);
-        }
-
-        if (pourquoiButton.getSelectedItem().equals(correctAnswers[3])) {
-            panel4.setColor(Color.GREEN);
-        } else {
-            panel4.setColor(Color.RED);
-        }
+        
     }
 
     //Creates 3 JPanels: GridBagLayout on left (puzzle number + JComboBoxes (dropdowns) + submit button), DrawingPanel on right w/ colored correct/incorrect boxes, GridBagLayout (probably) for right half (w/ text + frown image)
@@ -153,17 +177,6 @@ public class PuzzleFrame {
 
     public static void main(String[] args) {
         PuzzleFrame puzzleFrame = new PuzzleFrame();
-    //     String[] userAnswers = {
-    //         "le maire Honey",
-    //     "une araignée venimeuse",
-    //     "les anciennes ruines",
-    //     "pour une arnaque immobilière"
-    // };
-    //     Game game = new Game();
-    //     boolean[] arr = game.checkPuzzle(55, userAnswers);
-    //     for (int i = 0; i < arr.length; i++) {
-    //         System.out.println(arr[i]);
-    //     }
     }
 }
 
