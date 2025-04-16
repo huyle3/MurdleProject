@@ -152,6 +152,10 @@ public class PuzzleFrame {
                         pourquoiButton.addItem(game.getPuzzle(currentPuzzle).getWhy()[i]);
                     }                    
                 }
+                panel1.setColor(Color.GREY);
+                panel2.setColor(Color.GREY);
+                panel3.setColor(Color.GREY);
+                panel4.setColor(Color.GREY);
             }
         };
         numButton.addActionListener(numListener);
