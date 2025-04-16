@@ -137,22 +137,24 @@ public class PuzzleFrame {
         ActionListener numListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                // //quiButton = new JComboBox<>(game.getPuzzle(Integer.parseInt(numButton.getSelectedItem().toString())).getWho());
-                // quoiButton = new JComboBox<> (game.getPuzzle(Integer.parseInt(numButton.getSelectedItem().toString())).getWhat());
-                // ouButton = new JComboBox<>(game.getPuzzle(Integer.parseInt(numButton.getSelectedItem().toString())).getWhere());
-                // pourquoiButton = new JComboBox<>(game.getPuzzle(Integer.parseInt(numButton.getSelectedItem().toString())).getWhy());
-
+;
                 quiButton.removeAllItems();
                 quoiButton.removeAllItems();
                 ouButton.removeAllItems();
                 pourquoiButton.removeAllItems();
-
-                for () {
-                    quiButton.addItem();
-
+                
+                currentPuzzle = Integer.parseInt(numButton.getSelectedItem().toString());
+                for (int i = 0; i < game.getPuzzle(currentPuzzle).getWhat().length; i++) {
+                    quoiButton.addItem(game.getPuzzle(currentPuzzle).getWhat()[i]);
+                    quiButton.addItem(game.getPuzzle(currentPuzzle).getWho()[i]);
+                    ouButton.addItem(game.getPuzzle(currentPuzzle).getWhere()[i]);
+                    if (currentPuzzle >= 50){
+                        pourquoiButton.addItem(game.getPuzzle(currentPuzzle).getWhy()[i]);
+                    }                    
                 }
             }
         };
+        numButton.addActionListener(numListener);
 
         buttons.add(button1, Component.LEFT_ALIGNMENT);
         buttons.add(button2, Component.LEFT_ALIGNMENT);
@@ -176,7 +178,7 @@ public class PuzzleFrame {
         // define correct answers
         String[] userAnswer;
         DrawingPanel[] panelsList = {panel1, panel2, panel3, panel4};
-        if (Integer.parseInt(numButton.getSelectedItem().toString()) == 4){ 
+        if (game.getPuzzle(currentPuzzle).getWhat().length == 4){ 
             userAnswer = new String[]{
                 quiButton.getSelectedItem().toString(),
                 quoiButton.getSelectedItem().toString(),

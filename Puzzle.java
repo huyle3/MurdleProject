@@ -30,11 +30,7 @@ public class Puzzle {
     public boolean[] checkArr(String[] userInput) { //checks that array given the category as input
         boolean[] boolArr = new boolean[arrLength]; //either 3 or 4 long
         for (int i = 0; i < answerArr.length; i++) { // loops through each correct answer
-            if (answerArr[i].equals(userInput[i])) { // if that correct answer is equal to what user input
-                boolArr[i] = true; // return true
-            } else {
-                boolArr[i] = false; //return false
-            }
+            boolArr[i] = answerArr[i].equals(userInput[i]);
         }
         return boolArr;
     }
