@@ -18,16 +18,11 @@ public class Puzzle {
         answerArr = new String[arrLength];
         
         for (int i = 0; i < arrLength; i++) {
-            for (int j = 0; j < choiceArr[0].length; j++) { //restructure later
-                if (j == 0) { // first one qui
-                    whoArr[i] = choiceArr[i][j];
-                } else if (j == 1) { // second one quoi
-                    whatArr[i] = choiceArr[i][j];
-                } else if (j == 2) { //third one where
-                    whereArr[i] = choiceArr[i][j];
-                } else if (j == 3) { //fourth one (if there is) why
-                    whyArr[i] = choiceArr[i][j];
-                }
+            whoArr[i] = choiceArr[i][0];
+            whatArr[i] = choiceArr[i][1];
+            whereArr[i] = choiceArr[i][2];
+            if (choiceArr[i].length == 4) {
+                whyArr[i] = choiceArr[i][3];
             }
         }
     }

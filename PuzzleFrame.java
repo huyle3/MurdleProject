@@ -53,7 +53,10 @@ public class PuzzleFrame {
         options2 = game.getPuzzle(currentPuzzle).getWhat();
         options3 = game.getPuzzle(currentPuzzle).getWhere();
         options4 = game.getPuzzle(currentPuzzle).getWhy();
-        Integer[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89 ,90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100};
+        Integer[] nums = new Integer[100];
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = i+1;
+        }
 
 
         quiButton = new JComboBox<>(options1);
@@ -130,6 +133,26 @@ public class PuzzleFrame {
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
         buttons.add(numButton, Component.LEFT_ALIGNMENT);
+        // thing to numbutton
+        ActionListener numListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                // //quiButton = new JComboBox<>(game.getPuzzle(Integer.parseInt(numButton.getSelectedItem().toString())).getWho());
+                // quoiButton = new JComboBox<> (game.getPuzzle(Integer.parseInt(numButton.getSelectedItem().toString())).getWhat());
+                // ouButton = new JComboBox<>(game.getPuzzle(Integer.parseInt(numButton.getSelectedItem().toString())).getWhere());
+                // pourquoiButton = new JComboBox<>(game.getPuzzle(Integer.parseInt(numButton.getSelectedItem().toString())).getWhy());
+
+                quiButton.removeAllItems();
+                quoiButton.removeAllItems();
+                ouButton.removeAllItems();
+                pourquoiButton.removeAllItems();
+
+                for () {
+                    quiButton.addItem();
+
+                }
+            }
+        };
 
         buttons.add(button1, Component.LEFT_ALIGNMENT);
         buttons.add(button2, Component.LEFT_ALIGNMENT);
@@ -151,25 +174,34 @@ public class PuzzleFrame {
 
     private void checkAnswers() {
         // define correct answers
+        String[] userAnswer;
         DrawingPanel[] panelsList = {panel1, panel2, panel3, panel4};
-
-        String[] userAnswer = {
-            quiButton.getSelectedItem().toString(),
-            quoiButton.getSelectedItem().toString(),
-            ouButton.getSelectedItem().toString(),
-            pourquoiButton.getSelectedItem().toString()
-        };
-        boolean[] checkedAnswerArr = game.checkPuzzle(currentPuzzle, userAnswer);
-        
-        for (int i = 0; i < checkedAnswerArr.length; i++) {
+        if (Integer.parseInt(numButton.getSelectedItem().toString()) == 4){ 
+            userAnswer = new String[]{
+                quiButton.getSelectedItem().toString(),
+                quoiButton.getSelectedItem().toString(),
+                ouButton.getSelectedItem().toString(),
+                pourquoiButton.getSelectedItem().toString()
+            };
+        }else{
+            userAnswer = new String[]{
+                quiButton.getSelectedItem().toString(),
+                quoiButton.getSelectedItem().toString(),
+                ouButton.getSelectedItem().toString()
+            };
+        }
+        boolean[] checkedAnswerArr = game.checkPuzzle(currentPuzzle, userAnswer);  
+        for (int i = 0; i < checkedAnswerArr.length; i++) {// it would loop through {true, false, false, true} for example
             if (checkedAnswerArr[i]) {
                 panelsList[i].setColor(Color.GREEN);
             } else {
                 panelsList[i].setColor(Color.RED);
             }
+            //panelsList[i].repaint();
         }
         
     }
+
 
     //Creates 3 JPanels: GridBagLayout on left (puzzle number + JComboBoxes (dropdowns) + submit button), DrawingPanel on right w/ colored correct/incorrect boxes, GridBagLayout (probably) for right half (w/ text + frown image)
     //Contains DrawingPanel class 
