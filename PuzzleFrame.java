@@ -182,7 +182,7 @@ public class PuzzleFrame {
         // define correct answers
         String[] userAnswer;
         DrawingPanel[] panelsList = {panel1, panel2, panel3, panel4};
-        if (game.getPuzzle(currentPuzzle).getWhat().length == 4){ 
+        if (game.getPuzzle(currentPuzzle).getWhat().length == 5){ 
             userAnswer = new String[]{
                 quiButton.getSelectedItem().toString(),
                 quoiButton.getSelectedItem().toString(),
