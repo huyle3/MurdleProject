@@ -94,18 +94,18 @@ public class PuzzleFrame {
         ImageIcon startIcon = new ImageIcon("/mnt/data/79c7e9c9-1997-4a4d-9e06-f3c92a0e1500.png"); //starting image, magnifying glass
         statusImageLabel = new JLabel(startIcon);
 
-        statusMessageArea = new JTextArea("Faites votre choix."); //text box stuff
-        statusMessageArea.setEditable(false);
-        statusMessageArea.setLineWrap(true);
-        statusMessageArea.setWrapStyleWord(true);
-        statusMessageArea.setOpaque(false);
-        statusMessageArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        statusTextArea = new JTextArea("Faites votre choix."); //text box stuff
+        statusTextArea.setEditable(false);
+        statusTextArea.setLineWrap(true);
+        statusTextArea.setWrapStyleWord(true);
+        statusTextArea.setOpaque(false);
+        statusTextArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
         statusPanel = new JPanel();
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
         statusPanel.add(statusImageLabel);
         statusPanel.add(Box.createVerticalStrut(10)); //verticle gap
-        statusPanel.add(statusMessageArea);
+        statusPanel.add(statusTextArea);
 
         bigBody.add(statusPanel);
         
