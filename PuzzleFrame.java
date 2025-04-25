@@ -26,20 +26,8 @@ public class PuzzleFrame {
     String[] options2; 
     String[] options3;  
     String[] options4; 
-    String[] nums; 
-    
+    String[] nums;
      // Construct path to the file
-    // try {
-    //     File fontFile = new File("/jmh_typewriter/JMH Typewriter.ttf");
-    //     Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
-    //     // Register the font with the GraphicsEnvironment
-    //     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    //     ge.registerFont(customFont);
-    //     // Use the font
-    //     Font font = new Font(customFont.getName(), Font.PLAIN, 12);
-    // } catch (IOException | java.awt.FontFormatException e) {
-    //     e.printStackTrace();
-    // }
 
     // Load the font 
 
@@ -74,6 +62,18 @@ public class PuzzleFrame {
 
 
     public PuzzleFrame(){
+        Font font = null;
+        try {
+            File fontFile = new File("jmh_typewriter/JMH Typewriter-Black.ttf");
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            // Register the font with the GraphicsEnvironment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(customFont);
+            // Use the font
+            font = new Font(customFont.getName(), Font.PLAIN, 12);
+        } catch (FontFormatException | IOException exception) {
+            exception.printStackTrace();
+        }
 
         game = new Game();
         currentPuzzle = 1;
@@ -95,6 +95,7 @@ public class PuzzleFrame {
         numButton = new JComboBox<>(nums);
         
         JFrame frame = new JFrame("Murdle Français");
+        frame.setFont(font);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750, 500);
 
@@ -126,7 +127,7 @@ public class PuzzleFrame {
         statusTextArea = new JTextArea("Faites votre choix."); //text box stuff
         statusTextArea.setEditable(false);
         statusTextArea.setOpaque(false);
-        statusTextArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        statusTextArea.setFont(font);
         statusTextArea.setLineWrap(true);
 
         statusPanel = new JPanel();
