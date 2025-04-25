@@ -45,7 +45,7 @@ public class PuzzleFrame {
     Graphics g3 = panel3.getGraphics();
     Graphics g4 = panel4.getGraphics();
 
-    JLabel statusImageLabel;
+    ImageIcon statusImageLabel;
     JTextArea statusTextArea;
     JPanel statusPanel;
 
