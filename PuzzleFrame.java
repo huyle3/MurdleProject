@@ -91,8 +91,8 @@ public class PuzzleFrame {
         
         addButtonFrame(buttons);
 
-        ImageIcon startIcon = new ImageIcon("/mnt/data/79c7e9c9-1997-4a4d-9e06-f3c92a0e1500.png"); //starting image, magnifying glass
-        statusImageLabel = new JLabel(startIcon);
+        ImageIcon baseImage = new ImageIcon("https://cdn-icons-png.flaticon.com/512/1800/1800204.png"); //starting image, magnifying glass
+        statusImageLabel = new JLabel(baseImage);
 
         statusTextArea = new JTextArea("Faites votre choix."); //text box stuff
         statusTextArea.setEditable(false);
