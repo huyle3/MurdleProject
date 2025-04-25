@@ -45,6 +45,10 @@ public class PuzzleFrame {
     Graphics g3 = panel3.getGraphics();
     Graphics g4 = panel4.getGraphics();
 
+    JLabel statusImageLabel;
+    JTextArea statusTextArea;
+    JPanel statusPanel;
+
 
     public PuzzleFrame(){
 
@@ -86,8 +90,25 @@ public class PuzzleFrame {
 
         
         addButtonFrame(buttons);
-        
 
+        ImageIcon startIcon = new ImageIcon("/mnt/data/79c7e9c9-1997-4a4d-9e06-f3c92a0e1500.png"); //starting image, magnifying glass
+        statusImageLabel = new JLabel(startIcon);
+
+        statusMessageArea = new JTextArea("Faites votre choix."); //text box stuff
+        statusMessageArea.setEditable(false);
+        statusMessageArea.setLineWrap(true);
+        statusMessageArea.setWrapStyleWord(true);
+        statusMessageArea.setOpaque(false);
+        statusMessageArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
+        statusPanel = new JPanel();
+        statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
+        statusPanel.add(statusImageLabel);
+        statusPanel.add(Box.createVerticalStrut(10)); //verticle gap
+        statusPanel.add(statusMessageArea);
+
+        bigBody.add(statusPanel);
+        
         frame.add(bigBody, BorderLayout.CENTER);
         frame.add(buttons, BorderLayout.WEST);
         frame.pack();
