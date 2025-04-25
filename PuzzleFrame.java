@@ -96,8 +96,6 @@ public class PuzzleFrame {
 
         statusTextArea = new JTextArea("Faites votre choix."); //text box stuff
         statusTextArea.setEditable(false);
-        statusTextArea.setLineWrap(true);
-        statusTextArea.setWrapStyleWord(true);
         statusTextArea.setOpaque(false);
         statusTextArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
