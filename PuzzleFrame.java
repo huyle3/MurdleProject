@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.BoxLayout;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.*;
 //main is here! waow
 //here be dragons
 
@@ -45,7 +46,7 @@ public class PuzzleFrame {
     Graphics g3 = panel3.getGraphics();
     Graphics g4 = panel4.getGraphics();
 
-    ImageIcon statusImageLabel;
+    JLabel statusImageLabel;
     JTextArea statusTextArea;
     JPanel statusPanel;
 
@@ -91,8 +92,14 @@ public class PuzzleFrame {
         
         addButtonFrame(buttons);
 
-        java.net.URL baseImage = new URL("https://cdn-icons-png.flaticon.com/512/1800/1800204.png"); //starting image, magnifying glass
-        statusImageLabel = new ImageIcon(baseImage);
+
+        try {
+            URL startImageUrl = new URL("https://cdn-icons-png.flaticon.com/512/1800/1800204.png");
+            ImageIcon startIcon = new ImageIcon(startImageUrl);
+            statusImageLabel = new JLabel(startIcon);
+        } catch (MalformedURLException e) {
+            statusImageLabel = new JLabel("bad url"); // fallback text/icon if URL fails
+        }
 
         statusTextArea = new JTextArea("Faites votre choix."); //text box stuff
         statusTextArea.setEditable(false);
@@ -180,6 +187,7 @@ public class PuzzleFrame {
                 panel2.setColor(Color.GRAY);
                 panel3.setColor(Color.GRAY);
                 panel4.setColor(Color.GRAY);
+                updateStatus("start"); //resets image on right
             }
         };
         numButton.addActionListener(numListener);
@@ -253,8 +261,46 @@ public class PuzzleFrame {
             }
             //panelsList[i].repaint();
         }
+
+        //stuff below is for changing the right image
+        boolean allCorrect = true;
+        for (int i = 0; i < checkedAnswerArr.length; i++) {
+            if (checkedAnswerArr[i]) {
+                panelsList[i].setColor(Color.GREEN);
+            } else {
+                panelsList[i].setColor(Color.RED);
+                allCorrect = false;
+            }
+        }
+
+        if (allCorrect) {
+            updateStatus("correct");
+        } else {
+            updateStatus("wrong");
+        }
         
     }
+
+    private void updateStatus(String statusType) {
+    try {
+        switch (statusType) { //quicker if-else
+            case "start":
+                statusImageLabel.setIcon(new ImageIcon(new URL("https://cdn-icons-png.flaticon.com/512/1800/1800204.png"))); //the base image
+                statusTextArea.setText("Faites votre choix.");
+                break;
+            case "correct":
+                statusImageLabel.setIcon(new ImageIcon(new URL("https://media1.tenor.com/m/viIU4ICp1N8AAAAd/dance.gif"))); //happy image :)
+                statusTextArea.setText("Félicitations ! Vous êtes un super détective !");
+                break;
+            case "wrong":
+                statusImageLabel.setIcon(new ImageIcon(new URL("https://media.istockphoto.com/id/543347592/vector/why-god-why-emoticon.jpg?s=612x612&w=0&k=20&c=gukkiZ3mBsm4qWZaZu_KLbwFhWdteeME0cLoEbo4yMw="))); //sad image:(
+                statusTextArea.setText("Malheureusement, ce n’est pas la bonne solution. Essayez encore.");
+                break;
+        }
+    } catch (Exception e) {
+        statusTextArea.setText("error in changing the image");
+    }
+}
 
 
     //Creates 3 JPanels: GridBagLayout on left (puzzle number + JComboBoxes (dropdowns) + submit button), DrawingPanel on right w/ colored correct/incorrect boxes, GridBagLayout (probably) for right half (w/ text + frown image)
