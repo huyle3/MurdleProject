@@ -1,8 +1,15 @@
+
 import javax.swing.*;
-import javax.swing.BoxLayout;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.InputStream;
 import java.net.*;
+import java.nio.file.Paths;
+import java.io.File;
+import java.io.IOException;
+
 //main is here! waow
 //here be dragons
 
@@ -19,7 +26,22 @@ public class PuzzleFrame {
     String[] options2; 
     String[] options3;  
     String[] options4; 
-    String[] nums;
+    String[] nums; 
+    
+     // Construct path to the file
+    // try {
+    //     File fontFile = new File("/jmh_typewriter/JMH Typewriter.ttf");
+    //     Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+    //     // Register the font with the GraphicsEnvironment
+    //     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    //     ge.registerFont(customFont);
+    //     // Use the font
+    //     Font font = new Font(customFont.getName(), Font.PLAIN, 12);
+    // } catch (IOException | java.awt.FontFormatException e) {
+    //     e.printStackTrace();
+    // }
+
+    // Load the font 
 
 
     JComboBox<String> quiButton;
@@ -105,6 +127,7 @@ public class PuzzleFrame {
         statusTextArea.setEditable(false);
         statusTextArea.setOpaque(false);
         statusTextArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        statusTextArea.setLineWrap(true);
 
         statusPanel = new JPanel();
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
@@ -168,7 +191,6 @@ public class PuzzleFrame {
         ActionListener numListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-;
                 quiButton.removeAllItems();
                 quoiButton.removeAllItems();
                 ouButton.removeAllItems();
@@ -191,6 +213,24 @@ public class PuzzleFrame {
             }
         };
         numButton.addActionListener(numListener);
+
+        ActionListener clearListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event){
+                panel1.setColor(Color.GRAY); //set all buttons back to gray
+                panel2.setColor(Color.GRAY);
+                panel3.setColor(Color.GRAY);
+                panel4.setColor(Color.GRAY);
+                updateStatus("start"); //resets image on right
+                quoiButton.setSelectedIndex(0);
+                quiButton.setSelectedIndex(0);
+                ouButton.setSelectedIndex(0);                
+                if (currentPuzzle >= 50){ 
+                    pourquoiButton.setSelectedIndex(0);
+                }
+            }
+        };
+        effacerButton.addActionListener(clearListener);
 
         //adds qui label
         JLabel quiLabel = new JLabel("Qui");
@@ -220,7 +260,8 @@ public class PuzzleFrame {
 
         //add check box
 
-        ActionListener submitListener = new ActionListener() {
+
+                ActionListener submitListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 checkAnswers();
@@ -280,28 +321,27 @@ public class PuzzleFrame {
         }
         
     }
-
+    
     private void updateStatus(String statusType) {
-    try {
-        switch (statusType) { //quicker if-else
-            case "start":
-                statusImageLabel.setIcon(new ImageIcon(new URL("https://cdn-icons-png.flaticon.com/512/1800/1800204.png"))); //the base image
-                statusTextArea.setText("Faites votre choix.");
-                break;
-            case "correct":
-                statusImageLabel.setIcon(new ImageIcon(new URL("https://media1.tenor.com/m/viIU4ICp1N8AAAAd/dance.gif"))); //happy image :)
-                statusTextArea.setText("Félicitations ! Vous êtes un super détective !");
-                break;
-            case "wrong":
-                statusImageLabel.setIcon(new ImageIcon(new URL("https://media.istockphoto.com/id/543347592/vector/why-god-why-emoticon.jpg?s=612x612&w=0&k=20&c=gukkiZ3mBsm4qWZaZu_KLbwFhWdteeME0cLoEbo4yMw="))); //sad image:(
-                statusTextArea.setText("Malheureusement, ce n’est pas la bonne solution. Essayez encore.");
-                break;
+        try {
+            switch (statusType) { //quicker if-else
+                case "start":
+                    statusImageLabel.setIcon(new ImageIcon(new URL("https://cdn-icons-png.flaticon.com/512/1800/1800204.png"))); //the base image
+                    statusTextArea.setText("Faites votre choix.");
+                    break;
+                case "correct":
+                    statusImageLabel.setIcon(new ImageIcon(new URL("https://media1.tenor.com/m/viIU4ICp1N8AAAAd/dance.gif"))); //happy image :)
+                    statusTextArea.setText("Félicitations ! Vous êtes un super détective !");
+                    break;
+                case "wrong":
+                    statusImageLabel.setIcon(new ImageIcon(new URL("https://media.istockphoto.com/id/543347592/vector/why-god-why-emoticon.jpg?s=612x612&w=0&k=20&c=gukkiZ3mBsm4qWZaZu_KLbwFhWdteeME0cLoEbo4yMw="))); //sad image:(
+                    statusTextArea.setText("Malheureusement, ce n’est pas la bonne solution. Essayez encore.");
+                    break;
+            }
+        } catch (Exception e) {
+            statusTextArea.setText("error in changing the image");
         }
-    } catch (Exception e) {
-        statusTextArea.setText("error in changing the image");
-    }
-}
-
+    }   
 
     //Creates 3 JPanels: GridBagLayout on left (puzzle number + JComboBoxes (dropdowns) + submit button), DrawingPanel on right w/ colored correct/incorrect boxes, GridBagLayout (probably) for right half (w/ text + frown image)
     //Contains DrawingPanel class 
@@ -310,5 +350,7 @@ public class PuzzleFrame {
     public static void main(String[] args) {
         PuzzleFrame puzzleFrame = new PuzzleFrame();
     }
+    
 }
+
 
