@@ -26,6 +26,7 @@ public class PuzzleFrame {
     JComboBox<String> ouButton; 
     JComboBox<String> pourquoiButton; 
     JButton soumetrreButton = new JButton("Soumettre");
+    JButton effacerButton = new JButton("Effacer");
 
     JComboBox<Integer> numButton;
 
@@ -199,6 +200,10 @@ public class PuzzleFrame {
             }
         };
         soumetrreButton.addActionListener(submitListener);
+
+        //add clear box: NOTE (Need help to do this, plan is to make a 101st option in the answeChoices list and have that be the default w/ the "make your choice")
+        buttons.add(effacerButton, Component.LEFT_ALIGNMENT);
+
         
     }
 
