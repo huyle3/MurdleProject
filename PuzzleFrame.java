@@ -129,8 +129,12 @@ public class PuzzleFrame {
         panel4.setColor(Color.GRAY);
         
 
-
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+
+        //adds number label
+        JLabel numLabel = new JLabel("Numéro");
+        numLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        buttons.add(numLabel);
 
         buttons.add(numButton, Component.LEFT_ALIGNMENT);
         // thing to numbutton
@@ -160,10 +164,30 @@ public class PuzzleFrame {
         };
         numButton.addActionListener(numListener);
 
+        //adds qui label
+        JLabel quiLabel = new JLabel("Qui");
+        quiLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        buttons.add(quiLabel);
         buttons.add(button1, Component.LEFT_ALIGNMENT);
+
+        //adds quoi label
+        JLabel quoiLabel = new JLabel("Quoi");
+        quoiLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        buttons.add(quoiLabel);
         buttons.add(button2, Component.LEFT_ALIGNMENT);
+
+        //adds ou label
+        JLabel ouLabel = new JLabel("Ou");
+        ouLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        buttons.add(ouLabel);
         buttons.add(button3, Component.LEFT_ALIGNMENT);
+
+        //adds pourquoi label
+        JLabel pqLabel = new JLabel("Pourquoi");
+        pqLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        buttons.add(pqLabel);
         buttons.add(button4, Component.LEFT_ALIGNMENT);
+
         buttons.add(soumetrreButton, Component.LEFT_ALIGNMENT);
 
         //add check box
