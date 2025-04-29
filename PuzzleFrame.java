@@ -22,48 +22,34 @@ public class PuzzleFrame {
 //creates stuffs
 
 //dropdown stuff
-    String[] options1;
-    String[] options2; 
-    String[] options3;  
-    String[] options4; 
     String[] nums;
-     // Construct path to the file
 
-    // Load the font 
+    //qui, quoi, ou, pourquoi dropdowns
+    JComboBox<String> quiButton, quoiButton, ouButton, pourquoiButton;
+    JComboBox<String>[] comboBoxArr;
 
-
-    JComboBox<String> quiButton;
-    JComboBox<String> quoiButton; 
-    JComboBox<String> ouButton; 
-    JComboBox<String> pourquoiButton; 
     JButton soumetrreButton = new JButton("Soumettre");
     JButton effacerButton = new JButton("Effacer");
 
+    //puzzle number dropdown 
     JComboBox<Integer> numButton;
 
     JPanel button1 = new JPanel();
     JPanel button2 = new JPanel();
     JPanel button3 = new JPanel();
     JPanel button4 = new JPanel();
+    JPanel[] listOfButtons;
 
-    DrawingPanel panel1 = new DrawingPanel(50, 50);
-    DrawingPanel panel2 = new DrawingPanel(50, 50);
-    DrawingPanel panel3 = new DrawingPanel(50, 50);
-    DrawingPanel panel4 = new DrawingPanel(50, 50);
-
-    Graphics g1 = panel1.getGraphics();
-    Graphics g2 = panel2.getGraphics();
-    Graphics g3 = panel3.getGraphics();
-    Graphics g4 = panel4.getGraphics();
+    DrawingPanel[] listOfPanels = new DrawingPanel[]{new DrawingPanel(50, 50), new DrawingPanel(50, 50), new DrawingPanel(50, 50), new DrawingPanel(50, 50)};
 
     JLabel statusImageLabel;
     JTextArea statusTextArea;
     JPanel statusPanel;
 
-
     public PuzzleFrame(){
         Font font = null;
         try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             File fontFile = new File("jmh_typewriter/JMH Typewriter-Black.ttf");
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             // Register the font with the GraphicsEnvironment
@@ -71,26 +57,36 @@ public class PuzzleFrame {
             ge.registerFont(customFont);
             // Use the font
             font = new Font(customFont.getName(), Font.PLAIN, 12);
-        } catch (FontFormatException | IOException exception) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | FontFormatException | IOException exception) {
             exception.printStackTrace();
         }
+        UIManager.put("Button.font", font);
+        UIManager.put("Label.font", font);
+        UIManager.put("TextField.font", font);
+        UIManager.put("TextArea.font", font);
+        UIManager.put("JComboBox.font", font);
+        UIManager.put("JList.font", font);
+        UIManager.put("JTable.font", font);
+        UIManager.put("TableHeader.font", font);
+        UIManager.put("JMenuItem.font", font);
+   
+        
+        comboBoxArr = new JComboBox[]{quiButton, quoiButton, ouButton, pourquoiButton};
+        listOfButtons = new JPanel[]{button1, button2, button3, button4};
 
         game = new Game();
         currentPuzzle = 1;
-        options1 = game.getPuzzle(currentPuzzle).getWho();
-        options2 = game.getPuzzle(currentPuzzle).getWhat();
-        options3 = game.getPuzzle(currentPuzzle).getWhere();
-        options4 = game.getPuzzle(currentPuzzle).getWhy();
+        
         Integer[] nums = new Integer[100];
         for (int i = 0; i < nums.length; i++) {
             nums[i] = i+1;
         }
 
-
-        quiButton = new JComboBox<>(options1);
-        quoiButton = new JComboBox<>(options2);
-        ouButton = new JComboBox<>(options3);
-        pourquoiButton = new JComboBox<>(options4);
+        
+        comboBoxArr[0] = new JComboBox<>(game.getPuzzle(currentPuzzle).getWho());
+        comboBoxArr[1] = new JComboBox<>(game.getPuzzle(currentPuzzle).getWhat());
+        comboBoxArr[2] = new JComboBox<>(game.getPuzzle(currentPuzzle).getWhere());
+        comboBoxArr[3] = new JComboBox<>(game.getPuzzle(currentPuzzle).getWhy());
 
         numButton = new JComboBox<>(nums);
         
@@ -106,15 +102,9 @@ public class PuzzleFrame {
         BoxLayout bl2 = new BoxLayout(buttons, BoxLayout.X_AXIS);
 
         //created the panels & whatnot
-
-        button1.setLayout(bl2);
-        button2.setLayout(bl2);
-        button3.setLayout(bl2);
-        button4.setLayout(bl2);
-
-        
-        addButtonFrame(buttons);
-
+        for (int i = 0; i < listOfButtons.length; i++) {
+            listOfButtons[i].setLayout(bl2);
+        }
 
         try {
             URL startImageUrl = new URL("https://cdn-icons-png.flaticon.com/512/1800/1800204.png");
@@ -128,16 +118,21 @@ public class PuzzleFrame {
         statusTextArea.setEditable(false);
         statusTextArea.setOpaque(false);
         statusTextArea.setFont(font);
-        statusTextArea.setLineWrap(true);
+        //statusTextArea.setLineWrap(true);
 
+        //rightmost panel, contains 'congrats'/'try again' text, images
         statusPanel = new JPanel();
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
         statusPanel.add(statusImageLabel);
         statusPanel.add(Box.createVerticalStrut(10)); //verticle gap
-        statusPanel.add(statusTextArea);
+        statusPanel.add(statusTextArea, Component.CENTER_ALIGNMENT);
 
+        statusPanel.setBackground(new Color(224, 211, 175));
         bigBody.add(statusPanel);
-        
+
+        addButtonFrame(buttons);
+        buttons.setBackground(new Color(224, 211, 175));
+        bigBody.setBackground(new Color(224, 211, 175)); 
         frame.add(bigBody, BorderLayout.CENTER);
         frame.add(buttons, BorderLayout.WEST);
         frame.pack();
@@ -147,38 +142,14 @@ public class PuzzleFrame {
 
 
     public void addButtonFrame(JPanel buttons){  
-        //created button panel, w/ the drop down menues
-        button1.setLayout(new BoxLayout(button1, BoxLayout.X_AXIS));
-        button1.add(quiButton);
-        button1.add(Box.createHorizontalGlue());
-        //rectangle here
-        button1.add(panel1);
-        panel1.setColor(Color.GRAY);
-        
-
-        button2.setLayout(new BoxLayout(button2, BoxLayout.X_AXIS));
-        button2.add(quoiButton);
-        button2.add(Box.createHorizontalGlue());
-        //rectangle here
-        button2.add(panel2);
-        panel2.setColor(Color.GRAY);
-        
-
-        button3.setLayout(new BoxLayout(button3, BoxLayout.X_AXIS));
-        button3.add(ouButton);
-        button3.add(Box.createHorizontalGlue());
-        //rectangle here
-        button3.add(panel3);
-        panel3.setColor(Color.GRAY);
-        
-
-        button4.setLayout(new BoxLayout(button4, BoxLayout.X_AXIS));
-        button4.add(pourquoiButton);
-        button4.add(Box.createHorizontalGlue());
-        //rectangle here
-        button4.add(panel4);
-        panel4.setColor(Color.GRAY);
-        
+        for (int i = 0; i < comboBoxArr.length; i++) {
+            listOfButtons[i].setLayout(new BoxLayout(listOfButtons[i], BoxLayout.X_AXIS));
+            listOfButtons[i].add(comboBoxArr[i]);
+            listOfButtons[i].add(Box.createHorizontalGlue());
+            listOfPanels[i].setBackground(new Color(224, 211, 175));
+            listOfButtons[i].add(listOfPanels[i]);
+            listOfPanels[i].setColor(Color.GRAY);
+        }
 
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
@@ -192,11 +163,10 @@ public class PuzzleFrame {
         ActionListener numListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                quiButton.removeAllItems();
-                quoiButton.removeAllItems();
-                ouButton.removeAllItems();
-                pourquoiButton.removeAllItems();
-                
+                for (int i = 0; i < comboBoxArr.length; i++) {
+                    comboBoxArr[i].removeAllItems();
+                }
+         
                 currentPuzzle = Integer.parseInt(numButton.getSelectedItem().toString());
                 for (int i = 0; i < game.getPuzzle(currentPuzzle).getWhat().length; i++) {
                     quoiButton.addItem(game.getPuzzle(currentPuzzle).getWhat()[i]);
@@ -206,10 +176,7 @@ public class PuzzleFrame {
                         pourquoiButton.addItem(game.getPuzzle(currentPuzzle).getWhy()[i]);
                     }                    
                 }
-                panel1.setColor(Color.GRAY);
-                panel2.setColor(Color.GRAY);
-                panel3.setColor(Color.GRAY);
-                panel4.setColor(Color.GRAY);
+                setGray(); //sets all buttons back to gray
                 updateStatus("start"); //resets image on right
             }
         };
@@ -218,10 +185,7 @@ public class PuzzleFrame {
         ActionListener clearListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event){
-                panel1.setColor(Color.GRAY); //set all buttons back to gray
-                panel2.setColor(Color.GRAY);
-                panel3.setColor(Color.GRAY);
-                panel4.setColor(Color.GRAY);
+                setGray();
                 updateStatus("start"); //resets image on right
                 quoiButton.setSelectedIndex(0);
                 quiButton.setSelectedIndex(0);
@@ -233,36 +197,22 @@ public class PuzzleFrame {
         };
         effacerButton.addActionListener(clearListener);
 
-        //adds qui label
         JLabel quiLabel = new JLabel("Qui");
-        quiLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        buttons.add(quiLabel);
-        buttons.add(button1, Component.LEFT_ALIGNMENT);
-
-        //adds quoi label
         JLabel quoiLabel = new JLabel("Quoi");
-        quoiLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        buttons.add(quoiLabel);
-        buttons.add(button2, Component.LEFT_ALIGNMENT);
-
-        //adds ou label
         JLabel ouLabel = new JLabel("Ou");
-        ouLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        buttons.add(ouLabel);
-        buttons.add(button3, Component.LEFT_ALIGNMENT);
+        JLabel pourquoiLabel = new JLabel("Pourquoi");
+        JLabel[] listOfLabels = new JLabel[] {quiLabel, quoiLabel, ouLabel, pourquoiLabel};
 
-        //adds pourquoi label
-        JLabel pqLabel = new JLabel("Pourquoi");
-        pqLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        buttons.add(pqLabel);
-        buttons.add(button4, Component.LEFT_ALIGNMENT);
+        for (int i = 0; i < listOfLabels.length; i++) {
+            listOfLabels[i].setAlignmentX(Component.LEFT_ALIGNMENT);
+            buttons.add(listOfLabels[i]);
+            listOfButtons[i].setBackground(new Color(224, 211, 175));
+            buttons.add(listOfButtons[i], Component.LEFT_ALIGNMENT);
+        }
 
         buttons.add(soumetrreButton, Component.LEFT_ALIGNMENT);
 
-        //add check box
-
-
-                ActionListener submitListener = new ActionListener() {
+        ActionListener submitListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 checkAnswers();
@@ -275,11 +225,15 @@ public class PuzzleFrame {
 
         
     }
+    private void setGray() {
+        for (int i = 0; i < listOfPanels.length; i++) {
+            listOfPanels[i].setColor(Color.GRAY);
+        }
+    }
 
     private void checkAnswers() {
         // define correct answers
         String[] userAnswer;
-        DrawingPanel[] panelsList = {panel1, panel2, panel3, panel4};
         if (game.getPuzzle(currentPuzzle).getWhat().length == 5){ 
             userAnswer = new String[]{
                 quiButton.getSelectedItem().toString(),
@@ -294,27 +248,18 @@ public class PuzzleFrame {
                 ouButton.getSelectedItem().toString()
             };
         }
-        boolean[] checkedAnswerArr = game.checkPuzzle(currentPuzzle, userAnswer);  
+        boolean[] checkedAnswerArr = game.checkPuzzle(currentPuzzle, userAnswer); 
+        boolean allCorrect = true; 
         for (int i = 0; i < checkedAnswerArr.length; i++) {// it would loop through {true, false, false, true} for example
             if (checkedAnswerArr[i]) {
-                panelsList[i].setColor(Color.GREEN);
+                listOfPanels[i].setColor(Color.GREEN);
             } else {
-                panelsList[i].setColor(Color.RED);
+                listOfPanels[i].setColor(Color.RED);
+                allCorrect = false;
             }
             //panelsList[i].repaint();
         }
-
-        //stuff below is for changing the right image
-        boolean allCorrect = true;
-        for (int i = 0; i < checkedAnswerArr.length; i++) {
-            if (checkedAnswerArr[i]) {
-                panelsList[i].setColor(Color.GREEN);
-            } else {
-                panelsList[i].setColor(Color.RED);
-                allCorrect = false;
-            }
-        }
-
+        //check if all answers are correct
         if (allCorrect) {
             updateStatus("correct");
         } else {

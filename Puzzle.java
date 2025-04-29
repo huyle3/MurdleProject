@@ -1,5 +1,6 @@
 
 import java.util.*;
+//stores information for any given puzzle
 public class Puzzle {
     private String[] whatArr; //all the arrays
     private String[] whoArr;
@@ -18,18 +19,24 @@ public class Puzzle {
         this.answerArr = answerArr;
         answerArr = new String[arrLength];
         
+        
         String[][] arrOfArr = new String[][]{whatArr, whoArr, whereArr, whyArr};
 
-        for (int i = 0; i < arrOfArr.length; i++) {
-            arrOfArr[i][0] = string; //first choice in each is 0
-        }
 
-        for (int i = 0; i < arrLength - 1; i++) { //
+        //adds puzzle choices to each array
+        for (int i = 0; i < arrLength - 1; i++) { 
             whoArr[i+1] = choiceArr[i][0];
             whatArr[i+1] = choiceArr[i][1];
             whereArr[i+1] = choiceArr[i][2];
             if (choiceArr[i].length == 4) {
                 whyArr[i+1] = choiceArr[i][3];
+            }
+        }
+
+        //adds "faire votre choix" to beginning of each array
+        for (int i = 0; i < arrOfArr.length; i++) {
+            if (arrOfArr[i].length >= 3){ 
+                arrOfArr[i][0] = string; 
             }
         }
     }
@@ -42,7 +49,7 @@ public class Puzzle {
         return boolArr;
     }
 
-    //getter
+    //getters
     public String[] getWho() {
         return whoArr;
     }
