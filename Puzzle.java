@@ -1,4 +1,3 @@
-
 import java.util.*;
 //stores information for any given puzzle
 public class Puzzle {
@@ -19,9 +18,7 @@ public class Puzzle {
         this.answerArr = answerArr;
         answerArr = new String[arrLength];
         
-        
         String[][] arrOfArr = new String[][]{whatArr, whoArr, whereArr, whyArr};
-
 
         //adds puzzle choices to each array
         for (int i = 0; i < arrLength - 1; i++) { 
@@ -32,10 +29,9 @@ public class Puzzle {
                 whyArr[i+1] = choiceArr[i][3];
             }
         }
-
         //adds "faire votre choix" to beginning of each array
         for (int i = 0; i < arrOfArr.length; i++) {
-            if (arrOfArr[i].length >= 3){ 
+            if (arrOfArr[i][1] != null){  //checks for why arr since there is no values in why array puzzle 1-50
                 arrOfArr[i][0] = string; 
             }
         }
