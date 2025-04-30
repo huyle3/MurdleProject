@@ -1,6 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.*;
 import java.io.File;
 import java.io.InputStream;
 import java.net.*;
@@ -13,7 +17,7 @@ public class PuzzleFrame {
     private JPanel buttons;
     private Game game;
     private int currentPuzzle;
-    String[] nums;
+    private String[] nums;
 
     //qui, quoi, ou, pourquoi dropdowns
     JComboBox<String> quiButton;
@@ -31,16 +35,26 @@ public class PuzzleFrame {
     JPanel[] listOfButtons;
     DrawingPanel[] listOfPanels = new DrawingPanel[]{new DrawingPanel(50, 50), new DrawingPanel(50, 50), new DrawingPanel(50, 50), new DrawingPanel(50, 50)};
 
+    JLabel titleLabel;
     JLabel statusImageLabel;
     JTextArea statusTextArea;
     JPanel statusPanel;
+    int top = 10;
+    int bottom = 10;
+    int left = 20;
+    int right = 20;
+    Border padding = BorderFactory.createEmptyBorder(top, left, bottom, right);
+
+    
+    final BufferedImage imageSad = resize(new URL("https://i.imgur.com/rT9OpJZ.png"), new Dimension(50, 50));
+
 
     public PuzzleFrame(){
         Font font = null; 
         try { //reads in fontfile and creates a font, found from outside source
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            File fontFile = new File("jmh_typewriter/JMH Typewriter-Black.ttf");
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            // File fontFile = new File("jmh_typewriter/JMH Typewriter-Black.ttf");
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("jmh_typewriter/JMH Typewriter-Black.ttf"));
             // Register the font with the GraphicsEnvironment
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
@@ -58,6 +72,13 @@ public class PuzzleFrame {
         UIManager.put("JTable.font", font);
         UIManager.put("TableHeader.font", font);
         UIManager.put("JMenuItem.font", font);
+
+        titleLabel = new JLabel("Murdle");
+        titleLabel.setBackground(new Color(224, 211, 175));
+        titleLabel.setOpaque(true);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setVerticalAlignment(SwingConstants.CENTER);
+        titleLabel.setBorder(padding);
    
         listOfButtons = new JPanel[4]; 
         for (int i = 0; i < listOfButtons.length; i++) {
@@ -87,7 +108,8 @@ public class PuzzleFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750, 500);
 
-        JPanel bigBody = new JPanel(new FlowLayout()); //creates a body panel
+        //JPanel bigBody = new JPanel(new FlowLayout()); //creates body panel on the right
+        JPanel bigBody = new JPanel(new FlowLayout());
         JPanel buttons = new JPanel();
         BoxLayout bl = new BoxLayout(buttons, BoxLayout.Y_AXIS);
         buttons.setLayout(bl);
@@ -102,7 +124,7 @@ public class PuzzleFrame {
             URL startImageUrl = new URL("https://cdn-icons-png.flaticon.com/512/1800/1800204.png");
             ImageIcon startIcon = new ImageIcon(startImageUrl);
             statusImageLabel = new JLabel(startIcon);
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             statusImageLabel = new JLabel("bad url"); // fallback text/icon if URL fails
         }
 
@@ -125,8 +147,10 @@ public class PuzzleFrame {
         bigBody.setBackground(new Color(224, 211, 175)); 
         frame.add(bigBody, BorderLayout.CENTER);
         frame.add(buttons, BorderLayout.WEST);
+        frame.add(titleLabel, BorderLayout.NORTH);
         frame.pack();
         frame.setVisible(true);
+
     }
 
     public void addButtonFrame(JPanel buttons){   //logic for creating the buttons and adding them to button frame
@@ -197,6 +221,7 @@ public class PuzzleFrame {
 
         //clear button
         buttons.add(effacerButton, Component.LEFT_ALIGNMENT);
+        buttons.setBorder(padding);
     }
 
     private void resetComboBoxSelections() { 
@@ -249,6 +274,16 @@ public class PuzzleFrame {
         }     
     }
     
+    //resize
+    public BufferedImage resize(final URL url, final Dimension size) throws IOException{
+        final BufferedImage image = ImageIO.read(url);
+        final BufferedImage resized = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g = resized.createGraphics();
+        g.drawImage(image, 0, 0, size.width, size.height, null);
+        g.dispose();
+        return resized;
+    }
+    
     private void updateStatus(String statusType) {
         try {
             switch (statusType) { //quicker if-else
@@ -257,11 +292,11 @@ public class PuzzleFrame {
                     statusTextArea.setText("Faites votre choix.");
                     break;
                 case "correct":
-                    statusImageLabel.setIcon(new ImageIcon(new URL("https://media1.tenor.com/m/viIU4ICp1N8AAAAd/dance.gif"))); //happy image :)
+                    statusImageLabel.setIcon(new ImageIcon(new URL("https://i.imgur.com/6piy1kK.png"))); //happy image :)
                     statusTextArea.setText("Félicitations ! Vous êtes un super détective !");
                     break;
                 case "wrong":
-                    statusImageLabel.setIcon(new ImageIcon(new URL("https://media.istockphoto.com/id/543347592/vector/why-god-why-emoticon.jpg?s=612x612&w=0&k=20&c=gukkiZ3mBsm4qWZaZu_KLbwFhWdteeME0cLoEbo4yMw="))); //sad image:(
+                    statusImageLabel.setIcon(new ImageIcon(imageSad)); //sad image:(
                     statusTextArea.setText("Malheureusement, ce n’est pas la bonne solution. Essayez encore.");
                     break;
             }
