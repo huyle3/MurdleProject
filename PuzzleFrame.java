@@ -46,6 +46,7 @@ public class PuzzleFrame {
     Border padding = BorderFactory.createEmptyBorder(top, left, bottom, right);
 
     private BufferedImage imageSad;
+    private BufferedImage imageHappy;
 
 
     public PuzzleFrame(){
@@ -72,8 +73,15 @@ public class PuzzleFrame {
         UIManager.put("TableHeader.font", font);
         UIManager.put("JMenuItem.font", font);
 
+        //adjusts imagesad & imagehappy
         try {
             imageSad = resize(new URL("https://i.imgur.com/rT9OpJZ.png"), new Dimension(350, 250));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            imageHappy = resize(new URL("https://i.imgur.com/6piy1kK.png"), new Dimension(250, 250));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -303,7 +311,7 @@ public class PuzzleFrame {
                     statusTextArea.setText("Faites votre choix.");
                     break;
                 case "correct":
-                    statusImageLabel.setIcon(new ImageIcon(new URL("https://i.imgur.com/6piy1kK.png"))); //happy image :)
+                    statusImageLabel.setIcon(new ImageIcon(imageHappy)); //happy image :)
                     statusTextArea.setText("Félicitations ! Vous êtes un super détective !");
                     break;
                 case "wrong":
