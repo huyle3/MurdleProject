@@ -45,8 +45,7 @@ public class PuzzleFrame {
     int right = 20;
     Border padding = BorderFactory.createEmptyBorder(top, left, bottom, right);
 
-    
-    final BufferedImage imageSad = resize(new URL("https://i.imgur.com/rT9OpJZ.png"), new Dimension(50, 50));
+    private BufferedImage imageSad;
 
 
     public PuzzleFrame(){
@@ -72,6 +71,12 @@ public class PuzzleFrame {
         UIManager.put("JTable.font", font);
         UIManager.put("TableHeader.font", font);
         UIManager.put("JMenuItem.font", font);
+
+        try {
+            imageSad = resize(new URL("https://i.imgur.com/rT9OpJZ.png"), new Dimension(350, 250));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         titleLabel = new JLabel("Murdle");
         titleLabel.setBackground(new Color(224, 211, 175));
@@ -135,6 +140,8 @@ public class PuzzleFrame {
         //rightmost panel, contains 'congrats'/'try again' text, images
         statusPanel = new JPanel();
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
+        statusImageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);  // <-- ADD THIS
+        statusTextArea.setAlignmentX(Component.CENTER_ALIGNMENT); 
         statusPanel.add(statusImageLabel);
         statusPanel.add(Box.createVerticalStrut(10)); //verticle gap
         statusPanel.add(statusTextArea, Component.CENTER_ALIGNMENT);
@@ -211,7 +218,9 @@ public class PuzzleFrame {
 
         buttons.add(soumetrreButton, Component.LEFT_ALIGNMENT); 
 
+
         ActionListener submitListener = new ActionListener() { //button listener for submit
+
             @Override
             public void actionPerformed(ActionEvent event) {
                 checkAnswers(); 
@@ -219,9 +228,11 @@ public class PuzzleFrame {
         };
         soumetrreButton.addActionListener(submitListener);
 
+
         //clear button
         buttons.add(effacerButton, Component.LEFT_ALIGNMENT);
         buttons.setBorder(padding);
+
     }
 
     private void resetComboBoxSelections() { 
