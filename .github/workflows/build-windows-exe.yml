@@ -22,12 +22,13 @@ jobs:
       - name: Create EXE using jpackage
         run: |
           mkdir output
+          echo "Running jpackage..."
           jpackage --verbose --type exe --name Murdle --input src/FrenchGameApp/app --main-jar murdle.jar --icon src/FrenchGameApp/app/murdle_logo.ico --resource-dir src/FrenchGameApp/app --java-options "-Dfile.encoding=UTF-8" --dest output --win-shortcut --win-menu --win-console
 
-      - name: Show output folder contents
+      - name: List all files recursively
         run: |
-          echo "Output folder contents:"
-          dir output
+          echo "Full directory listing:"
+          dir -Recurse
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
@@ -35,3 +36,8 @@ jobs:
           name: MurdleInstaller
           path: output/Murdle.exe
 
+      - name: Upload all output for debug
+        uses: actions/upload-artifact@v4
+        with:
+          name: DebugOutput
+          path: output/**
