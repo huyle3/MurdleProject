@@ -22,12 +22,11 @@ jobs:
       - name: Create EXE using jpackage
         run: |
           mkdir output
-          jpackage --type exe --name Murdle --input src/FrenchGameApp/app --main-jar murdle.jar --icon murdle_logo.ico --resource-dir src/FrenchGameApp/app --java-options "-Dfile.encoding=UTF-8" --dest output --win-shortcut --win-menu --win-console
+          jpackage --type exe --name Murdle --input src/FrenchGameApp/app --main-jar murdle.jar --icon src/FrenchGameApp/app/murdle_logo.ico --resource-dir src/FrenchGameApp/app --java-options "-Dfile.encoding=UTF-8" --dest output --win-shortcut --win-menu --win-console
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
           name: MurdleInstaller
           path: output/Murdle.exe
-
 
