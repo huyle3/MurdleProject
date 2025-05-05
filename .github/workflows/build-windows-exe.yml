@@ -37,7 +37,7 @@ jobs:
             --win-console
 
       - name: Upload EXE
-        uses: actions/upload-artifact@v3@93f4f0e19c02c7cd77c8d78b378b1bd1f4b5f8ce
+        uses: actions/upload-artifact@v4
         with:
-          name: MurdleInstaller
-          path: output/Murdle.exe
+          name: M
+
