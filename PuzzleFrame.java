@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.awt.image.*;
 import java.io.File;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.net.*;
 import java.nio.file.Paths;
 import java.io.File;
@@ -54,7 +55,7 @@ public class PuzzleFrame {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             // Load font from resources (inside jar) using getResourceAsStream
-            InputStream is = getClass().getResourceAsStream("src/fonts/jmh_typewriter/JMH Typewriter-Black.ttf");
+            InputStream is = getClass().getResourceAsStream("/fonts/jmh_typewriter/JMH Typewriter-Black.ttf");
             if (is == null) {
                 throw new IOException("Font file not found! Check path and packaging.");
             }
@@ -339,6 +340,15 @@ public class PuzzleFrame {
         }
     }
     public static void main(String[] args) {
-        PuzzleFrame puzzleFrame = new PuzzleFrame();
+        try {
+            new PuzzleFrame();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try (PrintWriter out = new PrintWriter("error.log")) {
+                e.printStackTrace(out);
+            } catch (IOException io) {
+                io.printStackTrace();
+            }
+        }
     }
 }
