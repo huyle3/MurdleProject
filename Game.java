@@ -8,9 +8,9 @@ public class Game {
         //(choiceArr) reads file -> splits TSV into arr -> makes 2Darr of tsv, passed
         //(answerArr) above excluding the 2Darr step 
         try{ 
-            File fileA = new File("answerChoices.tsv");
+            File fileA = new File("data/answerChoices.tsv");
             Scanner inputA = new Scanner(fileA);
-            File fileB = new File("trueAnswers.tsv");
+            File fileB = new File("data/trueAnswers.tsv");
             Scanner inputB = new Scanner(fileB);
             for (int i = 0; i < 100; i++){
                 String temp;

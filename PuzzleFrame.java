@@ -50,18 +50,21 @@ public class PuzzleFrame {
 
 
     public PuzzleFrame(){
-        Font font = null; 
-        try { //reads in fontfile and creates a font, found from outside source
+        Font font = null;
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            // File fontFile = new File("jmh_typewriter/JMH Typewriter-Black.ttf");
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("jmh_typewriter/JMH Typewriter-Black.ttf"));
-            // Register the font with the GraphicsEnvironment
+            // Load font from resources (inside jar) using getResourceAsStream
+            InputStream is = getClass().getResourceAsStream("src/fonts/jmh_typewriter/JMH Typewriter-Black.ttf");
+            if (is == null) {
+                throw new IOException("Font file not found! Check path and packaging.");
+            }
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, is);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
-            // Use the font
-            font = new Font(customFont.getName(), Font.PLAIN, 12);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | FontFormatException | IOException exception) {
-            exception.printStackTrace();
+            // Derive size and style from loaded font
+            font = customFont.deriveFont(Font.PLAIN, 14f);
+        } catch (Exception e) {
+            e.printStackTrace();
         } //ui manager puts font to all components used
         UIManager.put("Button.font", font);
         UIManager.put("Label.font", font);
