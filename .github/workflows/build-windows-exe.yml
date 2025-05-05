@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: MurdleInstaller
-          path: output/Murdle.exe
+          path: output/Murdle-1.0.exe
 
       - name: Upload all output for debug
         uses: actions/upload-artifact@v4
