@@ -55,7 +55,7 @@ public class PuzzleFrame {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             // Load font from resources (inside jar) using getResourceAsStream
-            InputStream is = getClass().getResourceAsStream("/fonts/jmh_typewriter/JMH Typewriter-Black.ttf");
+            InputStream is = getClass().getResourceAsStream("/src/fonts/jmh_typewriter/JMH Typewriter-Black.ttf");
             if (is == null) {
                 throw new IOException("Font file not found! Check path and packaging.");
             }

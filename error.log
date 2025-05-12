@@ -1,0 +1,7 @@
+java.lang.NullPointerException
+	at java.base/java.io.Reader.<init>(Reader.java:168)
+	at java.base/java.io.InputStreamReader.<init>(InputStreamReader.java:88)
+	at java.base/java.util.Scanner.<init>(Scanner.java:588)
+	at Game.<init>(Game.java:11)
+	at PuzzleFrame.<init>(PuzzleFrame.java:105)
+	at PuzzleFrame.main(PuzzleFrame.java:344)

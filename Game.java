@@ -7,32 +7,28 @@ public class Game {
         puzzleArr = new Puzzle[100];
         //(choiceArr) reads file -> splits TSV into arr -> makes 2Darr of tsv, passed
         //(answerArr) above excluding the 2Darr step 
-        try{ 
-            File fileA = new File("data/answerChoices.tsv");
-            Scanner inputA = new Scanner(fileA);
-            File fileB = new File("data/trueAnswers.tsv");
-            Scanner inputB = new Scanner(fileB);
-            for (int i = 0; i < 100; i++){
-                String temp;
-                String[][] choiceArr; //stores (ordered) question choices, passed to Puzzle objects
-                String[] answerArr; //above but w/ question answers
-                if (i < 50){
-                    choiceArr = new String[3][3];
-                }else{
-                    choiceArr = new String[4][4];
-                }
-
-                for (int j = 0; j < choiceArr.length; j++){
-                    temp = inputA.nextLine();
-                    choiceArr[j] = temp.split("\t");
-                 }
-                temp = inputB.nextLine();
-                answerArr = temp.split("\t");
-                puzzleArr[i] = new Puzzle(choiceArr, answerArr);
+        InputStream inputStreamA = getClass().getResourceAsStream("answerChoices.tsv");
+        Scanner inputA = new Scanner(inputStreamA);
+        InputStream fileinputStreamB = getClass().getResourceAsStream("trueAnswers.tsv");
+        Scanner inputB = new Scanner(fileinputStreamB);
+        for (int i = 0; i < 100; i++){
+            String temp;
+            String[][] choiceArr; //stores (ordered) question choices, passed to Puzzle objects
+            String[] answerArr; //above but w/ question answers
+            if (i < 50){
+                choiceArr = new String[3][3];
+            }else{
+                choiceArr = new String[4][4];
             }
-        }catch (FileNotFoundException e){
-			e.printStackTrace();
-		}
+
+            for (int j = 0; j < choiceArr.length; j++){
+                temp = inputA.nextLine();
+                choiceArr[j] = temp.split("\t");
+                }
+            temp = inputB.nextLine();
+            answerArr = temp.split("\t");
+            puzzleArr[i] = new Puzzle(choiceArr, answerArr);
+            }
     }    
     //This method requires input from the user interface
     //Checks user input -> returns boolean[] w/ each index representing correctness of user answer for each field
